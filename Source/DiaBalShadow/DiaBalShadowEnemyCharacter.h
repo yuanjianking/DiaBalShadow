@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "AbilitySystemInterface.h"
+#include "DiaBalShadowCharacterBase.h"
 #include "DiaBalShadowEnemyCharacter.generated.h"
 
 UCLASS()
-class DIABALSHADOW_API ADiaBalShadowEnemyCharacter : public ACharacter
+class DIABALSHADOW_API ADiaBalShadowEnemyCharacter : public ADiaBalShadowCharacterBase
 {
 	GENERATED_BODY()
 
@@ -18,7 +20,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	virtual void PossessedBy(AController* NewController) override;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

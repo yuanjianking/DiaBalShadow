@@ -3,16 +3,11 @@
 
 #include "DiaBalShadowGameplayAbility.h"
 #include "DiaBalShadowAbilityComponent.h"
-#include "../DiaBalShadowCharacter.h"
-void UDiaBalShadowGameplayAbility::ApplyEffectContainer(TSubclassOf<UGameplayEffect>  Effect)
+
+void UDiaBalShadowGameplayAbility::ApplyEffectContainer(TSubclassOf<UGameplayEffect>  Effect, UAbilitySystemComponent* AbilityComponent)
 {
-	AActor* OwningActor = GetOwningActorFromActorInfo();
-	ADiaBalShadowCharacter* OwningCharacter = Cast<ADiaBalShadowCharacter>(OwningActor);
-	UDiaBalShadowAbilityComponent* AbilityComponent = Cast<UDiaBalShadowAbilityComponent> (OwningCharacter->GetAbilitySystemComponent());
-
-
 	FGameplayEffectContextHandle EffectContext = AbilityComponent->MakeEffectContext();
-	EffectContext.AddSourceObject(OwningCharacter);
+	EffectContext.AddSourceObject(AbilityComponent->GetOwnerActor());
 
 
 	FGameplayEffectSpecHandle EffectSpecHandle = AbilityComponent->MakeOutgoingSpec(Effect,

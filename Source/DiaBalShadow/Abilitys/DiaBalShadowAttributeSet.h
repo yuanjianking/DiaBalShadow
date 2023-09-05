@@ -30,6 +30,7 @@ public:
 	ATTRIBUTE_ACCESSORS(UDiaBalShadowAttributeSet, Health)
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 protected:
 
 	// These OnRep functions exist to make sure that the ability system internal representations are synchronized properly during replication

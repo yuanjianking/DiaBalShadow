@@ -6,6 +6,8 @@
 #include "Abilities/GameplayAbility.h"
 #include "DiaBalShadowGameplayAbility.generated.h"
 
+class UDiaBalShadowAbilityComponent;
+
 /**
  * 
  */
@@ -19,6 +21,6 @@ public:
 
 		/** Applies a gameplay effect container, by creating and then applying the spec */
 		UFUNCTION(BlueprintCallable, Category = Ability)
-		void ApplyEffectContainer(TSubclassOf<UGameplayEffect>  Effect);
+		void ApplyEffectContainer(TSubclassOf<UGameplayEffect>  Effect, UAbilitySystemComponent* AbilityComponent);
 	
 };
