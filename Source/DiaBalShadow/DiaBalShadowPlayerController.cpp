@@ -8,6 +8,7 @@
 #include "Engine/World.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "DiaBalShadowPlayerCharacter.h"
 
 ADiaBalShadowPlayerController::ADiaBalShadowPlayerController()
 {
@@ -108,11 +109,13 @@ void ADiaBalShadowPlayerController::OnSetDestinationReleased()
 void ADiaBalShadowPlayerController::OnTouchTriggered()
 {
 	bIsTouch = true;
+
 	OnSetDestinationTriggered();
 }
 
 void ADiaBalShadowPlayerController::OnTouchReleased()
 {
 	bIsTouch = false;
+
 	OnSetDestinationReleased();
 }
