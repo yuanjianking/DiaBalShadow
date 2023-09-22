@@ -92,4 +92,7 @@ protected:
 
 	/** Called when the async save happens */
 	virtual void HandleAsyncSave(const FString& SlotName, const int32 UserIndex, bool bSuccess);
+
+public:
+
 };
