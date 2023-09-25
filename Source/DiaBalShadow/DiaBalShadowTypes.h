@@ -150,3 +150,21 @@ struct DIABALSHADOW_API FUniqueData {
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	FText Description;
 };
+
+USTRUCT(BlueprintType)
+struct DIABALSHADOW_API FCharacterData {
+	GENERATED_BODY()
+	FCharacterData()
+	{}
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character)
+	FString Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character)
+	FName HeroName;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character)
+	//USkeletalMesh* Mesh;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character)
+	//UAnimSequence* Anim;
+};

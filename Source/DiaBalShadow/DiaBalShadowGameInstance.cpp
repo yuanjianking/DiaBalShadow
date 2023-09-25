@@ -125,3 +125,65 @@ void UDiaBalShadowGameInstance::HandleAsyncSave(const FString& SlotName, const i
 		SaveGame();
 	}
 }
+
+bool UDiaBalShadowGameInstance::AddCharacter(FString Name, FCharacterData Character)
+{
+	if (CharacterList.Contains(Name))
+	{
+		return false;
+	}
+	else
+	{
+		CharacterList.Add(Name, Character);
+		DefaultCharacter = Name;
+		return true;
+	}
+}
+
+FCharacterData UDiaBalShadowGameInstance::GetCharacter(FString Name)
+{
+	FCharacterData* Data = CharacterList.Find(Name);
+
+	if (Data != nullptr)
+	{
+		return (*Data);
+	}
+	else
+	{
+		return FCharacterData();
+	}
+}
+
+FCharacterData UDiaBalShadowGameInstance::GetDefaultCharacter()
+{
+	FCharacterData* Data = CharacterList.Find(DefaultCharacter);
+
+	if (Data != nullptr)
+	{
+		return (*Data);
+	}
+	else
+	{
+		return FCharacterData();
+	}
+}
+
+FCharacterData UDiaBalShadowGameInstance::RemoveCharacter(FString Name)
+{
+	FCharacterData * Data =CharacterList.Find(Name);
+	if (Data != nullptr)
+	{
+		CharacterList.Remove(Name);
+		TArray<FString> Keys;
+		CharacterList.GetKeys(Keys);
+		if (Keys.IsEmpty())
+		{
+			DefaultCharacter = TEXT("");
+		}
+		else
+		{
+			DefaultCharacter = *Keys.GetData();			
+		}	
+	}
+	return GetDefaultCharacter();
+}

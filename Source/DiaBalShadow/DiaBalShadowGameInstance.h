@@ -24,6 +24,7 @@ public:
 	UDiaBalShadowGameInstance()
 		:SaveSlot(TEXT("TT"))
 		, SaveUserIndex(0)
+		, DefaultCharacter(TEXT(""))
 	{}
 
 public:
@@ -94,5 +95,19 @@ protected:
 	virtual void HandleAsyncSave(const FString& SlotName, const int32 UserIndex, bool bSuccess);
 
 public:
+	UPROPERTY(BlueprintReadOnly, Category = Character)
+	TMap<FString, FCharacterData> CharacterList;
+
+	UPROPERTY(BlueprintReadWrite, Category = Character)
+	FString  DefaultCharacter;
+public:
+	UFUNCTION(BlueprintCallable, Category = Character)
+	bool AddCharacter(FString Name, FCharacterData Character);
+	UFUNCTION(BlueprintCallable, Category = Character)
+	FCharacterData  GetCharacter(FString Name);
+	UFUNCTION(BlueprintCallable, Category = Character)
+	FCharacterData  GetDefaultCharacter();
+	UFUNCTION(BlueprintCallable, Category = Character)
+	FCharacterData  RemoveCharacter(FString Name);
 
 };
