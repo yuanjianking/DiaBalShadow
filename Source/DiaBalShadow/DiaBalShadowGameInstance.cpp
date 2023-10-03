@@ -128,7 +128,8 @@ void UDiaBalShadowGameInstance::HandleAsyncSave(const FString& SlotName, const i
 
 bool UDiaBalShadowGameInstance::AddCharacter(FString Name, FCharacterData Character)
 {
-	if (CharacterList.Contains(Name))
+
+	if (Name.IsEmpty() || CharacterList.Contains(Name))
 	{
 		return false;
 	}

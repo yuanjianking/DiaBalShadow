@@ -3,6 +3,7 @@
 /Saved
 /DerivedDataCache
 /.vs
-
+/build
+/windows
 .vsconfig
 DiaBalShadow.sln
