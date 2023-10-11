@@ -2,6 +2,7 @@
 
 #include "DiaBalShadowPlayerCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Net/UnrealNetwork.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -57,6 +58,18 @@ void ADiaBalShadowPlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 }
+
+
+void ADiaBalShadowPlayerCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ADiaBalShadowPlayerCharacter, CharacterGold);
+	DOREPLIFETIME(ADiaBalShadowPlayerCharacter, CharacterLevel);
+	DOREPLIFETIME(ADiaBalShadowPlayerCharacter, CharacterExperience);
+	DOREPLIFETIME(ADiaBalShadowPlayerCharacter, MaxCharacterExperience);
+}
+
 
 float ADiaBalShadowPlayerCharacter::GetGold() const
 {

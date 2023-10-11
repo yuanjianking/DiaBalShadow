@@ -117,27 +117,27 @@ void UDiaBalShadowAttributeSet::PostGameplayEffectExecute(const FGameplayEffectM
 		TargetCharacter = Cast<ADiaBalShadowCharacterBase>(TargetActor);
 	}
 
-	else if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		// Handle other health changes such as from healing or direct modifiers
 		// First clamp it
-		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetMaxHealth()));
+		//SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetMaxHealth()));
 
 		if (TargetCharacter)
 		{
 			// Call for all health changes
-			TargetCharacter->HandleHealthChanged(GetHealth(), SourceTags);
+			TargetCharacter->HandleHealthChanged(DeltaValue, SourceTags);
 		}
 	}
 	else if (Data.EvaluatedData.Attribute == GetManaAttribute())
 	{
 		// Clamp mana
-		SetMana(FMath::Clamp(GetMana(), 0.0f, GetMaxMana()));
+		//SetMana(FMath::Clamp(GetMana(), 0.0f, GetMaxMana()));
 
 		if (TargetCharacter)
 		{
 			// Call for all mana changes
-			TargetCharacter->HandleManaChanged(GetMana(), SourceTags);
+			TargetCharacter->HandleManaChanged(DeltaValue, SourceTags);
 		}
 	}
 }

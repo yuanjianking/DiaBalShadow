@@ -20,6 +20,8 @@ public:
 
 	virtual void PossessedBy(AController* NewController) override;
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
 	/** Returns TopDownCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
 	/** Returns CameraBoom subobject **/
@@ -46,6 +48,7 @@ protected :
 
 	UPROPERTY(EditAnywhere, Replicated, Category = Hero)
 	int32 MaxCharacterExperience;
+
 public:
 	UFUNCTION(BlueprintCallable)
 	virtual float GetGold() const;
