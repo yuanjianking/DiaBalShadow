@@ -43,6 +43,9 @@ ADiaBalShadowPlayerCharacter::ADiaBalShadowPlayerCharacter()
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+
+	CharacterGold = 0.0f;
+	CharacterLevel = 1;
 }
 
 void ADiaBalShadowPlayerCharacter::Tick(float DeltaSeconds)
@@ -53,4 +56,53 @@ void ADiaBalShadowPlayerCharacter::Tick(float DeltaSeconds)
 void ADiaBalShadowPlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
+}
+
+float ADiaBalShadowPlayerCharacter::GetGold() const
+{
+	return CharacterGold;
+}
+
+float ADiaBalShadowPlayerCharacter::AddGold(float Gold)
+{
+	CharacterGold = FMath::Clamp((Gold + Gold), 0.0f, 99999.0f);
+	return CharacterGold;
+}
+
+int32 ADiaBalShadowPlayerCharacter::GetCharacterLevel() const
+{
+	return CharacterLevel;
+}
+
+int32 ADiaBalShadowPlayerCharacter::SetCharacterLevel(int32 NewLevel)
+{
+	if (CharacterLevel != NewLevel && NewLevel > 0)
+	{
+		//RemoveStartupGameplayAbilities();
+		CharacterLevel = NewLevel;
+		//AddStartupGameplayAbilities();
+	}
+	return CharacterLevel;
+}
+
+int32 ADiaBalShadowPlayerCharacter::GetCharacterExperience() const
+{
+	return CharacterExperience;
+}
+
+int32 ADiaBalShadowPlayerCharacter::SetCharacterExperience(int32 NewExperience)
+{
+	CharacterExperience = FMath::Clamp((CharacterExperience - NewExperience), 0, MaxCharacterExperience);
+	return CharacterExperience;
+}
+
+int32 ADiaBalShadowPlayerCharacter::GetMaxCharacterExperience() const
+{
+	return MaxCharacterExperience;
+}
+
+int32 ADiaBalShadowPlayerCharacter::SetMaxCharacterExperience(int32 NewMaxExperience)
+{
+	MaxCharacterExperience = NewMaxExperience;
+	return MaxCharacterExperience;
 }

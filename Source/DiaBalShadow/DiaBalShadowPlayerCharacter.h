@@ -34,6 +34,41 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
+protected :
+	UPROPERTY(EditAnywhere, Replicated, Category = Hero)
+	float CharacterGold;
+	
+	UPROPERTY(EditAnywhere, Replicated, Category = Hero)
+	int32 CharacterLevel;
+	
+	UPROPERTY(EditAnywhere, Replicated, Category = Hero)
+	int32 CharacterExperience;
 
+	UPROPERTY(EditAnywhere, Replicated, Category = Hero)
+	int32 MaxCharacterExperience;
+public:
+	UFUNCTION(BlueprintCallable)
+	virtual float GetGold() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float AddGold(float Gold);
+
+	UFUNCTION(BlueprintCallable)
+	virtual int32 GetCharacterLevel() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual int32 SetCharacterLevel(int32 NewLevel);
+
+	UFUNCTION(BlueprintCallable)
+	virtual int32 GetCharacterExperience() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual int32 SetCharacterExperience(int32 NewExperience);
+
+	UFUNCTION(BlueprintCallable)
+	virtual int32 GetMaxCharacterExperience() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual int32 SetMaxCharacterExperience(int32 NewMaxExperience);
 };
 

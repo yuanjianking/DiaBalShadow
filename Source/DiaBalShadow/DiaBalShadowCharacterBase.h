@@ -55,12 +55,51 @@ public:
 	// Implement IAbilitySystemInterface
 	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	/** Returns current health, will be 0 if dead */
 	UFUNCTION(BlueprintCallable)
 	virtual float GetHealth() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetMaxHealth() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetMana() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetMaxMana() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetAttackPower() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetMagicPower() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetDefensePower() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetMoveSpeed() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetAttackSpeed() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetPower() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetStrength() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetIntelligence() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float GetAgility() const;
 
 public:
 	virtual void HandleHealthChanged(float DeltaValue, const struct FGameplayTagContainer& EventTags);
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnHealthChanged(float DeltaValue, const struct FGameplayTagContainer& EventTags);
+
+	virtual void HandleManaChanged(float DeltaValue, const struct FGameplayTagContainer& EventTags);
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnManaChanged(float DeltaValue, const struct FGameplayTagContainer& EventTags);
 };

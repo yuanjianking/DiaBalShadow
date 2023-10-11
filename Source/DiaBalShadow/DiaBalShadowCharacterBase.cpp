@@ -84,8 +84,109 @@ float ADiaBalShadowCharacterBase::GetHealth() const
 	return AttributeSet->GetHealth();
 }
 
+float ADiaBalShadowCharacterBase::GetMaxHealth() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetMaxHealth();
+}
+
+
+float ADiaBalShadowCharacterBase::GetMana() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetMana();
+}
+
+float ADiaBalShadowCharacterBase::GetMaxMana() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetMaxMana();
+}
+
+float ADiaBalShadowCharacterBase::GetAttackPower() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetAttackPower();
+}
+
+float ADiaBalShadowCharacterBase::GetMagicPower() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetMagicPower();
+}
+
+float ADiaBalShadowCharacterBase::GetDefensePower() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetDefensePower();
+}
+
+float ADiaBalShadowCharacterBase::GetMoveSpeed() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetMoveSpeed();
+}
+
+float ADiaBalShadowCharacterBase::GetAttackSpeed() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetAttackSpeed();
+}
+
+float ADiaBalShadowCharacterBase::GetPower() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetPower();
+}
+
+float ADiaBalShadowCharacterBase::GetStrength() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetStrength();
+}
+
+float ADiaBalShadowCharacterBase::GetIntelligence() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetIntelligence();
+}
+
+float ADiaBalShadowCharacterBase::GetAgility() const
+{
+	if (!AttributeSet)
+		return 1.f;
+
+	return AttributeSet->GetAgility();
+}
+
 void ADiaBalShadowCharacterBase::HandleHealthChanged(float DeltaValue, const FGameplayTagContainer& EventTags)
 {
 	OnHealthChanged(DeltaValue, EventTags);
+}
+void ADiaBalShadowCharacterBase::HandleManaChanged(float DeltaValue, const FGameplayTagContainer& EventTags)
+{
+	OnManaChanged(DeltaValue, EventTags);
 }
 
