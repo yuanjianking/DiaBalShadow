@@ -104,3 +104,8 @@ int32 ADiaBalShadowPlayerCharacter::SetMaxCharacterExperience(int32 NewMaxExperi
 	MaxCharacterExperience = NewMaxExperience;
 	return MaxCharacterExperience;
 }
+
+void ADiaBalShadowPlayerCharacter::TestAttributeSet_Health(float NewHealth)
+{
+	AttributeSet->SetHealth(NewHealth);
+}

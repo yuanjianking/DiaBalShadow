@@ -64,5 +64,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual int32 SetMaxCharacterExperience(int32 NewMaxExperience);
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void TestAttributeSet_Health(float NewHealth);
 };
 
