@@ -45,8 +45,9 @@ ADiaBalShadowPlayerCharacter::ADiaBalShadowPlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 
-	CharacterGold = 0.0f;
-	CharacterLevel = 1;
+	CharacterGold = 0;
+	CharacterExperience = 0;
+	MaxCharacterExperience = 0;
 }
 
 void ADiaBalShadowPlayerCharacter::Tick(float DeltaSeconds)
@@ -65,38 +66,22 @@ void ADiaBalShadowPlayerCharacter::GetLifetimeReplicatedProps(TArray<FLifetimePr
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ADiaBalShadowPlayerCharacter, CharacterGold);
-	DOREPLIFETIME(ADiaBalShadowPlayerCharacter, CharacterLevel);
 	DOREPLIFETIME(ADiaBalShadowPlayerCharacter, CharacterExperience);
 	DOREPLIFETIME(ADiaBalShadowPlayerCharacter, MaxCharacterExperience);
 }
 
 
-float ADiaBalShadowPlayerCharacter::GetGold() const
+int32 ADiaBalShadowPlayerCharacter::GetGold() const
 {
 	return CharacterGold;
 }
 
-float ADiaBalShadowPlayerCharacter::AddGold(float Gold)
+int32 ADiaBalShadowPlayerCharacter::AddGold(int32 Gold)
 {
-	CharacterGold = FMath::Clamp((Gold + Gold), 0.0f, 99999.0f);
+	CharacterGold = FMath::Clamp((CharacterGold + Gold), 0.0f, 99999.0f);
 	return CharacterGold;
 }
 
-int32 ADiaBalShadowPlayerCharacter::GetCharacterLevel() const
-{
-	return CharacterLevel;
-}
-
-int32 ADiaBalShadowPlayerCharacter::SetCharacterLevel(int32 NewLevel)
-{
-	if (CharacterLevel != NewLevel && NewLevel > 0)
-	{
-		//RemoveStartupGameplayAbilities();
-		CharacterLevel = NewLevel;
-		//AddStartupGameplayAbilities();
-	}
-	return CharacterLevel;
-}
 
 int32 ADiaBalShadowPlayerCharacter::GetCharacterExperience() const
 {
@@ -105,7 +90,7 @@ int32 ADiaBalShadowPlayerCharacter::GetCharacterExperience() const
 
 int32 ADiaBalShadowPlayerCharacter::SetCharacterExperience(int32 NewExperience)
 {
-	CharacterExperience = FMath::Clamp((CharacterExperience - NewExperience), 0, MaxCharacterExperience);
+	CharacterExperience = FMath::Clamp(NewExperience, 0, MaxCharacterExperience);
 	return CharacterExperience;
 }
 

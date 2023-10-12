@@ -23,6 +23,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -49,8 +51,13 @@ public:
 	TArray<TSubclassOf<UGameplayEffect>> PassiveGameplayEffects;
 
 public:
+	UPROPERTY(EditAnywhere, Replicated, Category = Hero)
+	int32 CharacterLevel;
+
+public:
 	/** Apply the startup gameplay abilities and effects */
 	void AddStartupGameplayAbilities();
+	void RemoveStartupGameplayAbilities();
 
 	// Implement IAbilitySystemInterface
 	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
@@ -94,6 +101,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual float GetAgility() const;
 
+	UFUNCTION(BlueprintCallable)
+	virtual int32 GetCharacterLevel() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual int32 SetCharacterLevel(int32 NewLevel);
 public:
 	virtual void HandleHealthChanged(float DeltaValue, const struct FGameplayTagContainer& EventTags);
 	UFUNCTION(BlueprintImplementableEvent)

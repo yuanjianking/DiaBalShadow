@@ -2,6 +2,7 @@
 
 
 #include "DiaBalShadowCharacterBase.h"
+#include "Net/UnrealNetwork.h"
 
 // Sets default values
 ADiaBalShadowCharacterBase::ADiaBalShadowCharacterBase()
@@ -14,6 +15,8 @@ ADiaBalShadowCharacterBase::ADiaBalShadowCharacterBase()
 
 	// Create the attribute set, this replicates by default
 	AttributeSet = CreateDefaultSubobject<UDiaBalShadowAttributeSet>(TEXT("AttributeSet"));
+
+	CharacterLevel = 1;
 }
 
 // Called when the game starts or when spawned
@@ -35,6 +38,13 @@ void ADiaBalShadowCharacterBase::PossessedBy(AController* NewController)
 	}
 }
 
+void ADiaBalShadowCharacterBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ADiaBalShadowCharacterBase, CharacterLevel);
+}
+
 // Called every frame
 void ADiaBalShadowCharacterBase::Tick(float DeltaTime)
 {
@@ -54,7 +64,7 @@ void ADiaBalShadowCharacterBase::AddStartupGameplayAbilities()
 	// Grant abilities, but only on the server	
 	for (TSubclassOf<UDiaBalShadowGameplayAbility>& StartupAbility : GameplayAbilities)
 	{
-		AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(StartupAbility, 1, INDEX_NONE, this));
+		AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(StartupAbility, CharacterLevel, INDEX_NONE, this));
 	}
 
 	// Now apply passives
@@ -63,17 +73,57 @@ void ADiaBalShadowCharacterBase::AddStartupGameplayAbilities()
 		FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
 		EffectContext.AddSourceObject(this);
 
-		FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(GameplayEffect, 1, EffectContext);
+		FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(GameplayEffect, CharacterLevel, EffectContext);
 		if (NewHandle.IsValid())
 		{
 			FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent);
 		}
 	}
 }
+void ADiaBalShadowCharacterBase::RemoveStartupGameplayAbilities()
+{
+	TArray<FGameplayAbilitySpecHandle> AbilitiesToRemove;
+	for (const FGameplayAbilitySpec& Spec : AbilitySystemComponent->GetActivatableAbilities())
+	{
+		if ((Spec.SourceObject == this) && GameplayAbilities.Contains(Spec.Ability->GetClass()))
+		{
+			AbilitiesToRemove.Add(Spec.Handle);
+		}
+	}
+
+	// Do in two passes so the removal happens after we have the full list
+	for (int32 i = 0; i < AbilitiesToRemove.Num(); i++)
+	{
+		AbilitySystemComponent->ClearAbility(AbilitiesToRemove[i]);
+	}
+
+	// Remove all of the passive gameplay effects that were applied by this character
+	FGameplayEffectQuery Query;
+	Query.EffectSource = this;
+	AbilitySystemComponent->RemoveActiveEffects(Query);
+}
+
 
 UAbilitySystemComponent* ADiaBalShadowCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+
+int32 ADiaBalShadowCharacterBase::GetCharacterLevel() const
+{
+	return CharacterLevel;
+}
+
+int32 ADiaBalShadowCharacterBase::SetCharacterLevel(int32 NewLevel)
+{
+	if (CharacterLevel != NewLevel && NewLevel > 0)
+	{
+		RemoveStartupGameplayAbilities();
+		CharacterLevel = NewLevel;
+		AddStartupGameplayAbilities();
+	}
+	return CharacterLevel;
 }
 
 float ADiaBalShadowCharacterBase::GetHealth() const

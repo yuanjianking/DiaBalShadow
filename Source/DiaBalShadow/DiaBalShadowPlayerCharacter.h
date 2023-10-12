@@ -38,11 +38,8 @@ private:
 
 protected :
 	UPROPERTY(EditAnywhere, Replicated, Category = Hero)
-	float CharacterGold;
-	
-	UPROPERTY(EditAnywhere, Replicated, Category = Hero)
-	int32 CharacterLevel;
-	
+	int32 CharacterGold;
+		
 	UPROPERTY(EditAnywhere, Replicated, Category = Hero)
 	int32 CharacterExperience;
 
@@ -51,16 +48,10 @@ protected :
 
 public:
 	UFUNCTION(BlueprintCallable)
-	virtual float GetGold() const;
+	virtual int32 GetGold() const;
 
 	UFUNCTION(BlueprintCallable)
-	virtual float AddGold(float Gold);
-
-	UFUNCTION(BlueprintCallable)
-	virtual int32 GetCharacterLevel() const;
-
-	UFUNCTION(BlueprintCallable)
-	virtual int32 SetCharacterLevel(int32 NewLevel);
+	virtual int32 AddGold(int32 Gold);
 
 	UFUNCTION(BlueprintCallable)
 	virtual int32 GetCharacterExperience() const;
