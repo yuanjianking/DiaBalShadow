@@ -73,6 +73,11 @@ int32 UDiaBalShadowItemManagerComponent::GetComplexGroup(UDiaBalShadowPrimaryDat
 	return ComplexItem.GetGroup(Item, GroupSum);
 }
 
+FComplexData UDiaBalShadowItemManagerComponent::GetComplex(UDiaBalShadowPrimaryDataAsset* Item)
+{
+	return ComplexItem.GetComplex(Item);
+}
+
 bool UDiaBalShadowItemManagerComponent::AddUniqueItem(FUniqueData Item, bool bAutoSlot)
 {
 	bool bResult = true;

@@ -23,4 +23,6 @@ public:
 	int32 GetCount(UDiaBalShadowPrimaryDataAsset* Item);
 
 	int32 GetGroup(UDiaBalShadowPrimaryDataAsset* Item, int32 GroupSum);
+
+	FComplexData GetComplex(UDiaBalShadowPrimaryDataAsset* Item);
 };

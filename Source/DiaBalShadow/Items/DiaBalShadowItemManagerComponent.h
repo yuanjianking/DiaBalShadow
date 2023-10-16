@@ -59,6 +59,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Complex)
 	int32 GetComplexGroup(UDiaBalShadowPrimaryDataAsset* Item);
 
+	UFUNCTION(BlueprintCallable, Category = Complex)
+	FComplexData GetComplex(UDiaBalShadowPrimaryDataAsset* Item);
+
 public:
 	UFUNCTION(BlueprintCallable, Category = Unique)
 	bool AddUniqueItem(FUniqueData Item, bool bAutoSlot = true);

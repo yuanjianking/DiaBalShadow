@@ -18,6 +18,7 @@ void UComplexItemInventory::AddItem(UDiaBalShadowPrimaryDataAsset* Item, int32 C
 	else
 	{
 		OldData->ItemCount = OldData->ItemCount + Count;
+		OldData->Item
 		ComplexItemData.Add(Item, *OldData);
 	}
 }
@@ -59,4 +60,14 @@ int32 UComplexItemInventory::GetGroup(UDiaBalShadowPrimaryDataAsset* Item, int32
 		Group = OldData->ItemCount / GroupSum + 1;
 	}
 	return Group;
+}
+
+FComplexData UComplexItemInventory::GetComplex(UDiaBalShadowPrimaryDataAsset* Item)
+{
+	FComplexData* Data = ComplexItemData.Find(Item);
+	if (Data != nullptr)
+	{
+		return *Data;
+	}
+	return FComplexData();
 }
