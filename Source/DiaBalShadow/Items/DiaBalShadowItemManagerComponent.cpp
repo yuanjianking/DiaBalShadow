@@ -14,7 +14,6 @@ UDiaBalShadowItemManagerComponent::UDiaBalShadowItemManagerComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	GroupSum = 99;
 	MaxKnapsack = 20;
 	MaxStorage = 20;
 	CurrentKnapsack = MaxKnapsack;
@@ -44,7 +43,7 @@ bool UDiaBalShadowItemManagerComponent::AddComplexItem(UDiaBalShadowPrimaryDataA
 {
 	bool bResult = true;
 	int32 ItemCount = ComplexItem.GetCount(Item);
-	if ((ItemCount % GroupSum) != 0)
+	if ((ItemCount % Item->MaxCount) != 0)
 	{
 		ComplexItem.AddItem(Item, Count);
 	}
@@ -62,20 +61,15 @@ bool UDiaBalShadowItemManagerComponent::AddComplexItem(UDiaBalShadowPrimaryDataA
 	}
 	return bResult;
 }
-
-int32 UDiaBalShadowItemManagerComponent::GetComplexCount(UDiaBalShadowPrimaryDataAsset* Item)
+ 
+int32 UDiaBalShadowItemManagerComponent::GetComplexCount(UDiaBalShadowPrimaryDataAsset* Item) const
 {
 	return ComplexItem.GetCount(Item);
 }
 
-int32 UDiaBalShadowItemManagerComponent::GetComplexGroup(UDiaBalShadowPrimaryDataAsset* Item)
+int32 UDiaBalShadowItemManagerComponent::GetComplexGroup(UDiaBalShadowPrimaryDataAsset* Item) const
 {
-	return ComplexItem.GetGroup(Item, GroupSum);
-}
-
-FComplexData UDiaBalShadowItemManagerComponent::GetComplex(UDiaBalShadowPrimaryDataAsset* Item)
-{
-	return ComplexItem.GetComplex(Item);
+	return ComplexItem.GetGroup(Item, Item->MaxCount);
 }
 
 bool UDiaBalShadowItemManagerComponent::AddUniqueItem(FUniqueData Item, bool bAutoSlot)

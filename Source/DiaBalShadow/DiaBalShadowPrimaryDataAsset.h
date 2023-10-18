@@ -43,6 +43,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	int32 PlaceHolder;
 
+	/** Maximum level this item can be, <= 0 means infinite */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
+	int32 RowSpan;
+	/** Maximum level this item can be, <= 0 means infinite */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
+	int32 ColumnSpan;
+
 	/** Maximum number of instances that can be in inventory at once, <= 0 means infinite */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Max)
 	int32 MaxCount;
@@ -51,7 +58,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Max)
 	int32 MaxLevel;
 
-
+	
 
 public:
 	/** Overridden to use saved type */

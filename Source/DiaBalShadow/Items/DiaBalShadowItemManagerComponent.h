@@ -42,8 +42,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Inventory)
 	int32 CurrentStorage;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Inventory)
-	int32 GroupSum;
 
 private:
 	UComplexItemInventory ComplexItem;
@@ -54,14 +52,10 @@ public:
 	bool AddComplexItem(UDiaBalShadowPrimaryDataAsset* Item, int32 Count);
 
 	UFUNCTION(BlueprintCallable, Category = Complex)
-	int32 GetComplexCount(UDiaBalShadowPrimaryDataAsset* Item);
+	int32 GetComplexCount(UDiaBalShadowPrimaryDataAsset* Item) const;
 
 	UFUNCTION(BlueprintCallable, Category = Complex)
-	int32 GetComplexGroup(UDiaBalShadowPrimaryDataAsset* Item);
-
-	UFUNCTION(BlueprintCallable, Category = Complex)
-	FComplexData GetComplex(UDiaBalShadowPrimaryDataAsset* Item);
-
+	int32 GetComplexGroup(UDiaBalShadowPrimaryDataAsset* Item) const;
 public:
 	UFUNCTION(BlueprintCallable, Category = Unique)
 	bool AddUniqueItem(FUniqueData Item, bool bAutoSlot = true);
