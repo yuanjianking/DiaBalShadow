@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EquipmentBase.h"
+#include "StoreBase.h"
 
-int32 UEquipmentBase::GetMaxBoxRow() const
+int32 UStoreBase::GetMaxBoxRow() const
 {
     return MaxBoxRow;
 }
 
-int32 UEquipmentBase::GetMaxBoxColumn() const
+int32 UStoreBase::GetMaxBoxColumn() const
 {
     return MaxBoxColumn;
 }
