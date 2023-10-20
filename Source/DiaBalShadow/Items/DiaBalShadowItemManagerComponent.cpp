@@ -11,15 +11,8 @@
 UDiaBalShadowItemManagerComponent::UDiaBalShadowItemManagerComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
+	// off to improve performance if you don't need them
 	PrimaryComponentTick.bCanEverTick = true;
-
-	MaxKnapsack = 20;
-	MaxStorage = 20;
-	CurrentKnapsack = MaxKnapsack;
-	CurrentStorage = MaxStorage;
-
-
 }
 
 
@@ -39,6 +32,14 @@ void UDiaBalShadowItemManagerComponent::TickComponent(float DeltaTime, ELevelTic
 	// ...
 }
 
+int32 UDiaBalShadowItemManagerComponent::GetCount(UDiaBalShadowPrimaryDataAsset* Item) const
+{
+	if (Item->ItemType == UDiaBalShadowAssetManager::WeaponItemType || Item->ItemType == UDiaBalShadowAssetManager::SkillItemType)
+		return 1;
+	else
+		return GetComplexCount(Item);
+}
+
 bool UDiaBalShadowItemManagerComponent::AddComplexItem(UDiaBalShadowPrimaryDataAsset* Item, int32 Count)
 {
 	bool bResult = true;
@@ -48,16 +49,8 @@ bool UDiaBalShadowItemManagerComponent::AddComplexItem(UDiaBalShadowPrimaryDataA
 		ComplexItem.AddItem(Item, Count);
 	}
 	else
-	{
-		int32 PlaceHolder = Item->PlaceHolder;
-		if (PlaceHolder > CurrentKnapsack)
-		{
-			bResult = false;
-		}
-		else
-		{
-			ComplexItem.AddItem(Item, Count);
-		}
+	{		
+		ComplexItem.AddItem(Item, Count);
 	}
 	return bResult;
 }
@@ -75,19 +68,9 @@ int32 UDiaBalShadowItemManagerComponent::GetComplexGroup(UDiaBalShadowPrimaryDat
 bool UDiaBalShadowItemManagerComponent::AddUniqueItem(FUniqueData Item, bool bAutoSlot)
 {
 	bool bResult = true;
-	int32 PlaceHolder = Item.Item->PlaceHolder;
-	if (PlaceHolder > CurrentKnapsack)
-	{
-		bResult = false;
-	}
-	else
-	{
-		bResult = UniqueItem.AddUniqueItem(Item);
-		if (bResult)
-		{
-			CurrentKnapsack = CurrentKnapsack - PlaceHolder;
-		}
-	}
+	
+	bResult = UniqueItem.AddUniqueItem(Item);
+	
 	if (bResult)
 	{
 		//自动添加武器插槽
@@ -110,6 +93,5 @@ void UDiaBalShadowItemManagerComponent::RemoveUniqueItem(FString GUID)
 	if(UniqueItem.RemoveUniqueItem(GUID))
 	{
 		FUniqueData Data = UniqueItem.GetUniqueItem(GUID);
-		CurrentKnapsack = CurrentKnapsack + Data.Item->PlaceHolder;
 	}
 }

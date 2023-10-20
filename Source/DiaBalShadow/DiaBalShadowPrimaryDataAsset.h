@@ -40,9 +40,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	int32 Price;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
-	int32 PlaceHolder;
-
 	/** Maximum level this item can be, <= 0 means infinite */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	int32 RowSpan;

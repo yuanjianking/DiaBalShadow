@@ -29,24 +29,13 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Inventory)
-	int32 MaxKnapsack;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Inventory)
-	int32 MaxStorage;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Inventory)
-	int32 CurrentKnapsack;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Inventory)
-	int32 CurrentStorage;
-
-
 private:
 	UComplexItemInventory ComplexItem;
 	UUniqueItemInventory UniqueItem;
 
+public:
+	UFUNCTION(BlueprintCallable, Category = Item)
+	int32 GetCount(UDiaBalShadowPrimaryDataAsset* Item)const;
 public:
 	UFUNCTION(BlueprintCallable, Category = Complex)
 	bool AddComplexItem(UDiaBalShadowPrimaryDataAsset* Item, int32 Count);
