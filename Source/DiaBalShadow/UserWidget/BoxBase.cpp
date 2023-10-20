@@ -15,6 +15,23 @@ void UBoxBase::AddCell(int32 X, int32 Y, UCellBase* Cell)
 	BoxCell[X][Y] = 0;
 }
 
+void UBoxBase::GetCellPostion(UCellBase* Cell, int32& OutX, int32& OutY)
+{
+
+	for (int X = 0; X < MaxBoxRow; X++)
+	{
+		for (int Y = 0; Y < MaxBoxColumn; Y++)
+		{
+			if(BoxCellWidget[X][Y] == Cell)
+			{
+				OutX = X;
+				OutY = Y;
+				return;
+			}
+		}
+	}
+}
+
 bool UBoxBase::IsAvailableCell(int32 X, int32 Y, UDiaBalShadowPrimaryDataAsset* Item)
 {
 	int32 MaxX = X + Item->RowSpan;

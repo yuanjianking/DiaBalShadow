@@ -29,6 +29,9 @@ public:
 	void AddCell(int32 X, int32 Y, UCellBase* Cell);
 
 	UFUNCTION(BlueprintCallable)
+	void GetCellPostion(UCellBase* Cell, int32& OutX, int32& OutY);
+
+	UFUNCTION(BlueprintCallable)
 	bool IsAvailableCell(int32 X, int32 Y, UDiaBalShadowPrimaryDataAsset* Item);
 
 	UFUNCTION(BlueprintCallable)
