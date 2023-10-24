@@ -18,7 +18,14 @@ void UComplexItemInventory::AddItem(UDiaBalShadowPrimaryDataAsset* Item, int32 C
 	else
 	{
 		OldData->ItemCount = OldData->ItemCount + Count;
-		ComplexItemData.Add(Item, *OldData);
+		if (OldData->ItemCount <= 0)
+		{
+			ComplexItemData.Remove(Item);
+		}
+		else
+		{
+			ComplexItemData.Add(Item, *OldData);
+		}		
 	}
 }
 

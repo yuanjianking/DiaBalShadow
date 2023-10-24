@@ -16,9 +16,12 @@ class DIABALSHADOW_API UCellBase : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Iyem)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	UDiaBalShadowPrimaryDataAsset* Item;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Iyem)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
+	FString GUID;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
 	int32 ItemCount;
 };

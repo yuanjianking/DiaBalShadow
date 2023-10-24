@@ -92,6 +92,6 @@ void UDiaBalShadowItemManagerComponent::RemoveUniqueItem(FString GUID)
 {
 	if(UniqueItem.RemoveUniqueItem(GUID))
 	{
-		FUniqueData Data = UniqueItem.GetUniqueItem(GUID);
+		
 	}
 }
