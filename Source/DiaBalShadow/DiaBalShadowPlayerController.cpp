@@ -9,6 +9,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "DiaBalShadowPlayerCharacter.h"
+#include "DiaBalShadowEnemyCharacter.h"
 
 ADiaBalShadowPlayerController::ADiaBalShadowPlayerController()
 {
@@ -56,7 +57,7 @@ void ADiaBalShadowPlayerController::SetupInputComponent()
 
 void ADiaBalShadowPlayerController::OnInputStarted()
 {
-	StopMovement();
+//	StopMovement();
 }
 
 // Triggered every frame when the input is held down
@@ -82,7 +83,19 @@ void ADiaBalShadowPlayerController::OnSetDestinationTriggered()
 	{
 		CachedDestination = Hit.Location;
 	}
-	
+
+	if(Hit.GetActor()->IsA<ADiaBalShadowEnemyCharacter>())
+	{ 
+		ADiaBalShadowEnemyCharacter* EnemyCharacter = Cast<ADiaBalShadowEnemyCharacter>(Hit.GetActor());
+		if(!EnemyCharacter->IsDead)
+		{
+			ADiaBalShadowPlayerCharacter* ControlledCharacter = Cast<ADiaBalShadowPlayerCharacter>(GetCharacter());
+			FGameplayTagContainer TagContainer(FGameplayTag::RequestGameplayTag(FName("Attack.Melee")));
+			ControlledCharacter->GetAbilitySystemComponent()->TryActivateAbilitiesByTag(TagContainer, true);
+			return;
+		}
+	}
+
 	// Move towards mouse pointer or touch
 	APawn* ControlledPawn = GetPawn();
 	if (ControlledPawn != nullptr)
