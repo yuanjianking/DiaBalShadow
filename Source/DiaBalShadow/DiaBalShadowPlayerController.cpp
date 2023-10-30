@@ -87,13 +87,18 @@ void ADiaBalShadowPlayerController::OnSetDestinationTriggered()
 	if(Hit.GetActor()->IsA<ADiaBalShadowEnemyCharacter>())
 	{ 
 		ADiaBalShadowEnemyCharacter* EnemyCharacter = Cast<ADiaBalShadowEnemyCharacter>(Hit.GetActor());
+		ADiaBalShadowPlayerCharacter* ControlledCharacter = Cast<ADiaBalShadowPlayerCharacter>(GetCharacter());
+		FGameplayTagContainer TagContainer(FGameplayTag::RequestGameplayTag(FName("Attack.Melee")));
 		if(!EnemyCharacter->IsDead)
 		{
-			ADiaBalShadowPlayerCharacter* ControlledCharacter = Cast<ADiaBalShadowPlayerCharacter>(GetCharacter());
-			FGameplayTagContainer TagContainer(FGameplayTag::RequestGameplayTag(FName("Attack.Melee")));
-			ControlledCharacter->GetAbilitySystemComponent()->TryActivateAbilitiesByTag(TagContainer, true);
-			return;
+			ControlledCharacter->GetAbilitySystemComponent()->TryActivateAbilitiesByTag(TagContainer, true);			
 		}
+		else
+		{
+
+			
+		}
+		return;
 	}
 
 	// Move towards mouse pointer or touch
