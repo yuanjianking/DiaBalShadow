@@ -14,7 +14,11 @@
 ADiaBalShadowPlayerController::ADiaBalShadowPlayerController()
 {
 	bShowMouseCursor = true;
-	DefaultMouseCursor = EMouseCursor::Default;
+	bEnableClickEvents = true;
+	bEnableTouchEvents = true;
+	bEnableMouseOverEvents = true;
+	EnableInput(this);
+	
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
 

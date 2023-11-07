@@ -12,3 +12,8 @@ int32 UStoreBase::GetMaxBoxColumn() const
 {
     return MaxBoxColumn;
 }
+
+void UStoreBase::CreateCell(const FString& Path)
+{
+    Super::CreateCell(Path, MaxBoxRow, MaxBoxColumn);
+}

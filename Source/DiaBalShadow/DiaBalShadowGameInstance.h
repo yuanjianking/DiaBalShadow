@@ -24,7 +24,6 @@ public:
 	UDiaBalShadowGameInstance()
 		:SaveSlot(TEXT("TT"))
 		, SaveUserIndex(0)
-		, DefaultCharacter(TEXT(""))
 	{}
 
 public:
@@ -96,18 +95,25 @@ protected:
 
 public:
 	UPROPERTY(BlueprintReadOnly, Category = Character)
-	TMap<FString, FCharacterData> CharacterList;
+	TArray<FCharacterData> CharacterList;
 
 	UPROPERTY(BlueprintReadWrite, Category = Character)
-	FString  DefaultCharacter;
+	FCharacterData  DefaultCharacter;
+
 public:
 	UFUNCTION(BlueprintCallable, Category = Character)
-	bool AddCharacter(FString Name, FCharacterData Character);
+	bool AddCharacter(FCharacterData Character);
+
 	UFUNCTION(BlueprintCallable, Category = Character)
-	FCharacterData  GetCharacter(FString Name);
+	FCharacterData  GetCharacter(FString PlayerName);
+
 	UFUNCTION(BlueprintCallable, Category = Character)
 	FCharacterData  GetDefaultCharacter();
+
 	UFUNCTION(BlueprintCallable, Category = Character)
-	FCharacterData  RemoveCharacter(FString Name);
+	FCharacterData  RemoveCharacter(FString PlayerName);
+
+	UFUNCTION(BlueprintCallable, Category = Character)
+	FCharacterData  SetDefaultCharacter(FString PlayerName);
 
 };

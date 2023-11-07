@@ -32,4 +32,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	int32  GetMaxBoxColumn() const;
+
+	UFUNCTION(BlueprintCallable)
+	void CreateCell(const FString& Path);
 };

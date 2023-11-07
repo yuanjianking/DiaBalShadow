@@ -90,8 +90,10 @@ void UDiaBalShadowItemManagerComponent::GetUniqueItems(TArray<FUniqueData>& Item
 
 void UDiaBalShadowItemManagerComponent::RemoveUniqueItem(FString GUID)
 {
-	if(UniqueItem.RemoveUniqueItem(GUID))
-	{
-		
-	}
+	UniqueItem.RemoveUniqueItem(GUID);
+}
+
+FUniqueData UDiaBalShadowItemManagerComponent::GetUniqueItem(FString GUID)
+{
+	return UniqueItem.GetUniqueItem(GUID);
 }

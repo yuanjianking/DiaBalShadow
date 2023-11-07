@@ -26,6 +26,14 @@ UCLASS()
 class DIABALSHADOW_API UEquipmentBase : public UBoxBase
 {
 	GENERATED_BODY()
+	
+public:
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UCellBase* WeaponSlot;
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponDroped(const FString& OldGUID);
 
 public:
 	UFUNCTION(BlueprintCallable)
@@ -33,4 +41,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	int32  GetMaxBoxColumn() const;
+
+	UFUNCTION(BlueprintCallable)
+	void CreateCell(const FString& Path);
+
+private:
+	void WeaponDroped(UCellBase* Cell, UCellBase* OprationCell);
 };

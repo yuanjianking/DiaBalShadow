@@ -157,14 +157,17 @@ struct DIABALSHADOW_API FCharacterData {
 	FCharacterData()
 	{}
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character)
-	FString Name;
+	FString PlayerName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character)
-	FName HeroName;
+	FString HeroName;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character)
-	//USkeletalMesh* Mesh;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Character)
-	//UAnimSequence* Anim;
+	bool operator==(const FCharacterData& Other) const
+	{
+		return PlayerName == Other.PlayerName && HeroName == Other.HeroName;
+	}
+	bool operator!=(const FCharacterData& Other) const
+	{
+		return !(*this == Other);
+	}
 };

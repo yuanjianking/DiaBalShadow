@@ -54,4 +54,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Unique)
 	void RemoveUniqueItem(FString GUID);
+
+	UFUNCTION(BlueprintCallable, Category = Unique)
+	FUniqueData GetUniqueItem(FString GUID);
 };

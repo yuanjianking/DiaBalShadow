@@ -22,4 +22,6 @@ public:
 	void GetUniqueItems(TArray<FUniqueData>& Items);
 
 	bool RemoveUniqueItem(FString GUID);
+
+
 };

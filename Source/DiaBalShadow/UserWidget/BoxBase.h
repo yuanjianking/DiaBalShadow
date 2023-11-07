@@ -18,28 +18,49 @@ class DIABALSHADOW_API UBoxBase : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UGridPanel* GridPanel;
+
+
 protected:
-	int32 BoxCell[MaxBoxRow][MaxBoxColumn] = { };
 	UCellBase* BoxCellWidget[MaxBoxRow][MaxBoxRow] = { };
 
 public:
-	UFUNCTION(BlueprintCallable)
 	UCellBase* GetCell(int32 X, int32 Y) const;
-	UFUNCTION(BlueprintCallable)
 	void AddCell(int32 X, int32 Y, UCellBase* Cell);
-
-	UFUNCTION(BlueprintCallable)
-	void GetCellPostion(UCellBase* Cell, int32& OutX, int32& OutY);
-
-	UFUNCTION(BlueprintCallable)
+	bool GetCellPostion(UCellBase* Cell, int32& OutX, int32& OutY);
 	bool IsAvailableCell(int32 X, int32 Y, UDiaBalShadowPrimaryDataAsset* Item);
-
-	UFUNCTION(BlueprintCallable)
 	UCellBase* FindAvailableCell(UDiaBalShadowPrimaryDataAsset* Item, int32& OutX, int32& OutY);
-
-	UFUNCTION(BlueprintCallable)
 	void UnavailableCell(int32 X, int32 Y, int32 RowSpan, int32 ColumnSpan);
-
-	UFUNCTION(BlueprintCallable)
 	void AvailableCell(int32 X, int32 Y, int32 RowSpan, int32 ColumnSpan);
+
+protected:
+	void CreateCell(const FString& Path, const int32 MaxX, const int32 MaxY);
+
+protected:
+	void ShowCell(int32 X, int32 Y, UDiaBalShadowPrimaryDataAsset* Item);
+	void HideCell(int32 X, int32 Y, UDiaBalShadowPrimaryDataAsset* Item);
+
+private:
+	void ItemRemoved(UCellBase* Cell, UDiaBalShadowPrimaryDataAsset* OldItem, FString OldGUID);
+	void ItemUpdated(UCellBase* Cell);
+	void ItemDroped(UCellBase* Cell, UCellBase* OprationCell);
+	void ItemThrowed(UCellBase* Cell);
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemRemoved(const UDiaBalShadowPrimaryDataAsset* Item, const FString& OldGUID);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemUpdated(const UDiaBalShadowPrimaryDataAsset* Item, const FString& OldGUID);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnWeaponDraged(const FString& OldGUID);
+
+public:
+	UFUNCTION(BlueprintCallable, Category = Item)
+	void AddItem(UDiaBalShadowPrimaryDataAsset* Item, FString GUID = TEXT(""));
+
+
 };

@@ -126,65 +126,77 @@ void UDiaBalShadowGameInstance::HandleAsyncSave(const FString& SlotName, const i
 	}
 }
 
-bool UDiaBalShadowGameInstance::AddCharacter(FString Name, FCharacterData Character)
+bool UDiaBalShadowGameInstance::AddCharacter(FCharacterData Character)
 {
-
-	if (Name.IsEmpty() || CharacterList.Contains(Name))
-	{
+	if (Character.PlayerName.IsEmpty())
 		return false;
-	}
-	else
+
+	for (const FCharacterData& Data : CharacterList)
 	{
-		CharacterList.Add(Name, Character);
-		DefaultCharacter = Name;
-		return true;
+		if (Data.PlayerName.Equals(Character.PlayerName))
+		{
+			return false;
+		}
 	}
+	
+	CharacterList.Add(Character);
+	DefaultCharacter = Character;
+	return true;
 }
 
-FCharacterData UDiaBalShadowGameInstance::GetCharacter(FString Name)
+FCharacterData UDiaBalShadowGameInstance::GetCharacter(FString PlayerName)
 {
-	FCharacterData* Data = CharacterList.Find(Name);
-
-	if (Data != nullptr)
+	for (const FCharacterData & Data : CharacterList)
 	{
-		return (*Data);
+		if (Data.PlayerName.Equals(PlayerName))
+		{
+			return Data;
+		}
 	}
-	else
-	{
-		return FCharacterData();
-	}
+	return FCharacterData();	
 }
 
 FCharacterData UDiaBalShadowGameInstance::GetDefaultCharacter()
 {
-	FCharacterData* Data = CharacterList.Find(DefaultCharacter);
+	return DefaultCharacter;
+}
 
-	if (Data != nullptr)
+FCharacterData UDiaBalShadowGameInstance::RemoveCharacter(FString PlayerName)
+{
+	FCharacterData OldData;
+
+	for (const FCharacterData& Data : CharacterList)
 	{
-		return (*Data);
+		if (Data.PlayerName.Equals(PlayerName))
+		{
+			OldData = Data;
+			break;
+		}
+	}	
+	if(OldData != FCharacterData())
+		CharacterList.Remove(OldData);
+
+	if (CharacterList.IsEmpty())
+	{
+		DefaultCharacter = FCharacterData();
 	}
 	else
 	{
-		return FCharacterData();
+		DefaultCharacter = CharacterList.Top();
 	}
+
+	return GetDefaultCharacter();
 }
 
-FCharacterData UDiaBalShadowGameInstance::RemoveCharacter(FString Name)
+FCharacterData UDiaBalShadowGameInstance::SetDefaultCharacter(FString PlayerName)
 {
-	FCharacterData * Data =CharacterList.Find(Name);
-	if (Data != nullptr)
+	for (const FCharacterData& Data : CharacterList)
 	{
-		CharacterList.Remove(Name);
-		TArray<FString> Keys;
-		CharacterList.GetKeys(Keys);
-		if (Keys.IsEmpty())
+		if (Data.PlayerName.Equals(PlayerName))
 		{
-			DefaultCharacter = TEXT("");
+			DefaultCharacter = Data;
+			break;
 		}
-		else
-		{
-			DefaultCharacter = *Keys.GetData();			
-		}	
 	}
 	return GetDefaultCharacter();
 }
