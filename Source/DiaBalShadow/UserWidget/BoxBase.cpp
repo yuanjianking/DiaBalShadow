@@ -148,12 +148,9 @@ void UBoxBase::ItemDroped(UCellBase* Cell, UCellBase* OprationCell)
 
 			if(GetCellPostion(OprationCell, X, Y))			
 				ShowCell(X, Y, Cell->Item);
-			else
-			{
-				if (OprationCell->Item->ItemType == UDiaBalShadowAssetManager::WeaponItemType)
-					OnWeaponDraged(OprationCell->GUID);
-			}
 			OprationCell->Clear();
+
+			OnItemDroped(Cell, OprationCell);
 		}
 		OprationCell->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 	}

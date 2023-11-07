@@ -56,7 +56,7 @@ public:
 	void OnItemUpdated(const UDiaBalShadowPrimaryDataAsset* Item, const FString& OldGUID);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void OnWeaponDraged(const FString& OldGUID);
+	void OnItemDroped(const UCellBase* Cell, const UCellBase* OprationCell);
 
 public:
 	UFUNCTION(BlueprintCallable, Category = Item)
