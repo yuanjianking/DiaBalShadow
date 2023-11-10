@@ -11,6 +11,7 @@
 
 /** Forward declaration to improve compiling times */
 class UNiagaraSystem;
+class UClass;
 
 UCLASS()
 class ADiaBalShadowPlayerController : public APlayerController
@@ -20,6 +21,7 @@ class ADiaBalShadowPlayerController : public APlayerController
 public:
 	ADiaBalShadowPlayerController();
 
+public:
 	/** Time Threshold to know if it was a short press */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	float ShortPressThreshold;

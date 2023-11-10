@@ -6,6 +6,8 @@
 #include "NiagaraSystem.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Engine/World.h"
+#include "UObject/Class.h"
+#include "Blueprint/UserWidget.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "DiaBalShadowPlayerCharacter.h"
@@ -31,9 +33,18 @@ void ADiaBalShadowPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	//Add Input Mapping Context
-	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+	if(DefaultMappingContext)
 	{
-		Subsystem->AddMappingContext(DefaultMappingContext, 0);
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+		{
+			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+		}
+	}
+	UClass* CursorClass = LoadClass<UUserWidget>(nullptr, TEXT("Blueprint'/Game/Blueprints/WidgetBP/Menu/Cursor.Cursor_C'"));
+	if (CursorClass)
+	{
+		UUserWidget* Cursor = CreateWidget<UUserWidget>(GetWorld(), CursorClass);
+		SetMouseCursorWidget(EMouseCursor::Default, Cursor);
 	}
 }
 
@@ -46,16 +57,21 @@ void ADiaBalShadowPlayerController::SetupInputComponent()
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent))
 	{
 		// Setup mouse input events
-		EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Started, this, &ADiaBalShadowPlayerController::OnInputStarted);
-		EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Triggered, this, &ADiaBalShadowPlayerController::OnSetDestinationTriggered);
-		EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Completed, this, &ADiaBalShadowPlayerController::OnSetDestinationReleased);
-		EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Canceled, this, &ADiaBalShadowPlayerController::OnSetDestinationReleased);
-
+		if(SetDestinationClickAction)
+		{
+			EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Started, this, &ADiaBalShadowPlayerController::OnInputStarted);
+			EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Triggered, this, &ADiaBalShadowPlayerController::OnSetDestinationTriggered);
+			EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Completed, this, &ADiaBalShadowPlayerController::OnSetDestinationReleased);
+			EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Canceled, this, &ADiaBalShadowPlayerController::OnSetDestinationReleased);
+		}
 		// Setup touch input events
+		if(SetDestinationTouchAction)
+		{
 		EnhancedInputComponent->BindAction(SetDestinationTouchAction, ETriggerEvent::Started, this, &ADiaBalShadowPlayerController::OnInputStarted);
 		EnhancedInputComponent->BindAction(SetDestinationTouchAction, ETriggerEvent::Triggered, this, &ADiaBalShadowPlayerController::OnTouchTriggered);
 		EnhancedInputComponent->BindAction(SetDestinationTouchAction, ETriggerEvent::Completed, this, &ADiaBalShadowPlayerController::OnTouchReleased);
 		EnhancedInputComponent->BindAction(SetDestinationTouchAction, ETriggerEvent::Canceled, this, &ADiaBalShadowPlayerController::OnTouchReleased);
+		}
 	}
 }
 
