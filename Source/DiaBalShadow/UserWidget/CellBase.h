@@ -9,7 +9,8 @@
 #include "CellBase.generated.h"
 
 DECLARE_DELEGATE_OneParam(ThrowEventDelegate, UCellBase*);
-DECLARE_DELEGATE_TwoParams(DropEventDelegate, UCellBase*, UCellBase*);
+DECLARE_DELEGATE_TwoParams(DropTargetEventDelegate, UCellBase*, UCellBase*);
+DECLARE_DELEGATE_OneParam(DropSourceEventDelegate, UCellBase*);
 DECLARE_DELEGATE_ThreeParams(RemoveEventDelegate, UCellBase*, UDiaBalShadowPrimaryDataAsset*, FString);
 DECLARE_DELEGATE_OneParam(UpDateEventDelegate, UCellBase*);
 
@@ -43,7 +44,8 @@ public:
 
 public:
 	ThrowEventDelegate ThrowEvent;
-	DropEventDelegate DropEvent;
+	DropTargetEventDelegate DropTargetEvent;
+	DropSourceEventDelegate DropSourceEvent;
 	RemoveEventDelegate RemoveEvent;
 	UpDateEventDelegate UpDateEvent;
 

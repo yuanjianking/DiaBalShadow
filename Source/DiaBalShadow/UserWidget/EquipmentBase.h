@@ -46,5 +46,6 @@ public:
 	void CreateCell(const FString& Path);
 
 private:
-	void WeaponDroped(UCellBase* Cell, UCellBase* OprationCell);
+	void WeaponTargetDroped(UCellBase* Cell, UCellBase* OperationCell);
+	void WeaponSourceDroped(UCellBase* OperationCell);
 };

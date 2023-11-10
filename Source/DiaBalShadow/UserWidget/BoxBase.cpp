@@ -115,7 +115,8 @@ void UBoxBase::CreateCell(const FString& Path, const int32 MaxX, const int32 Max
 				AddCell(X, Y, Cell);
 				Cell->RemoveEvent.BindUObject(this, &ThisClass::ItemRemoved);
 				Cell->UpDateEvent.BindUObject(this, &ThisClass::ItemUpdated);
-				Cell->DropEvent.BindUObject(this, &ThisClass::ItemDroped);
+				Cell->DropTargetEvent.BindUObject(this, &ThisClass::ItemDropedTarget);
+				Cell->DropSourceEvent.BindUObject(this, &ThisClass::ItemDropedSource);
 				Cell->ThrowEvent.BindUObject(this, &ThisClass::ItemThrowed);
 			}
 		}
@@ -136,24 +137,30 @@ void UBoxBase::ItemUpdated(UCellBase* Cell)
 	OnItemUpdated(Cell->Item, Cell->GUID);
 }
 
-void UBoxBase::ItemDroped(UCellBase* Cell, UCellBase* OprationCell)
+void UBoxBase::ItemDropedTarget(UCellBase* Cell, UCellBase* OperationCell)
 {	
 	int32 X = 0, Y = 0;
 	if(GetCellPostion(Cell, X, Y))
 	{
-		if (IsAvailableCell(X, Y, OprationCell->Item))
+		if (IsAvailableCell(X, Y, OperationCell->Item))
 		{
-			Cell->SetItem(OprationCell->Item, OprationCell->GUID, OprationCell->ItemCount);
-			HideCell(X, Y, Cell->Item);
+			Cell->SetItem(OperationCell->Item, OperationCell->GUID, OperationCell->ItemCount);
+			HideCell(X, Y, Cell->Item);						
+			
+			OperationCell->DropSourceEvent.ExecuteIfBound(OperationCell);
 
-			if(GetCellPostion(OprationCell, X, Y))			
-				ShowCell(X, Y, Cell->Item);
-			OprationCell->Clear();
-
-			OnItemDroped(Cell, OprationCell);
-		}
-		OprationCell->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+			OnItemDroped(Cell, OperationCell);
+		}		
+		OperationCell->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 	}
+}
+
+void UBoxBase::ItemDropedSource(UCellBase* OperationCell)
+{
+	int32 X = 0, Y = 0;
+	if (GetCellPostion(OperationCell, X, Y))
+		ShowCell(X, Y, OperationCell->Item);
+	OperationCell->Clear();
 }
 
 void UBoxBase::ItemThrowed(UCellBase* Cell)

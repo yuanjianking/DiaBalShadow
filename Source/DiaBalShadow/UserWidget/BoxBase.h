@@ -45,7 +45,8 @@ protected:
 private:
 	void ItemRemoved(UCellBase* Cell, UDiaBalShadowPrimaryDataAsset* OldItem, FString OldGUID);
 	void ItemUpdated(UCellBase* Cell);
-	void ItemDroped(UCellBase* Cell, UCellBase* OprationCell);
+	void ItemDropedTarget(UCellBase* Cell, UCellBase* OperationCell);
+	void ItemDropedSource(UCellBase* OperationCell);
 	void ItemThrowed(UCellBase* Cell);
 
 public:

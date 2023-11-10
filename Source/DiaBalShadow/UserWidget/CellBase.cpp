@@ -71,7 +71,7 @@ bool UCellBase::DragDetected()
 void UCellBase::Drop(UCellBase* OperationCell)
 {
 	IsMoved = false;
-	DropEvent.ExecuteIfBound(this, OperationCell);
+	DropTargetEvent.ExecuteIfBound(this, OperationCell);
 }
 
 void UCellBase::AddItemCount()

@@ -17,20 +17,23 @@ int32 UEquipmentBase::GetMaxBoxColumn() const
 void UEquipmentBase::CreateCell(const FString& Path)
 {
     Super::CreateCell(Path, MaxBoxRow, MaxBoxColumn);
-    WeaponSlot->DropEvent.BindUObject(this, &ThisClass::WeaponDroped);
+    WeaponSlot->DropTargetEvent.BindUObject(this, &ThisClass::WeaponTargetDroped);
+    WeaponSlot->DropSourceEvent.BindUObject(this, &ThisClass::WeaponSourceDroped);
 }
 
-void UEquipmentBase::WeaponDroped(UCellBase* Cell, UCellBase* OprationCell)
+void UEquipmentBase::WeaponTargetDroped(UCellBase* Cell, UCellBase* OperationCell)
 {
-    if (OprationCell->Item->ItemType == UDiaBalShadowAssetManager::WeaponItemType)
+    if (OperationCell->Item->ItemType == UDiaBalShadowAssetManager::WeaponItemType)
     {
-		Cell->SetItem(OprationCell->Item, OprationCell->GUID, OprationCell->ItemCount);
-        OnWeaponDroped(OprationCell->GUID);
+		Cell->SetItem(OperationCell->Item, OperationCell->GUID, OperationCell->ItemCount);
+        OnWeaponDroped(OperationCell->GUID);
 
-		int32 X = 0, Y = 0;
-		if(GetCellPostion(OprationCell, X, Y))
-            ShowCell(X, Y, Cell->Item);
-		OprationCell->Clear();
+        OperationCell->DropSourceEvent.ExecuteIfBound(OperationCell);
     }
-    OprationCell->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+    OperationCell->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+}
+
+void UEquipmentBase::WeaponSourceDroped(UCellBase* OperationCell)
+{
+    OperationCell->Clear();
 }
