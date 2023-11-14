@@ -39,7 +39,8 @@ void UCellBase::DragLeave()
 void UCellBase::DragCancelled()
 {
 	SetVisibility(ESlateVisibility::SelfHitTestInvisible);
-	APlayerController* FirstController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	ThrowEvent.ExecuteIfBound(this);
+	/*APlayerController* FirstController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if(FirstController)
 	{
 		ULocalPlayer* LocalPlayer = FirstController->GetLocalPlayer();
@@ -56,7 +57,7 @@ void UCellBase::DragCancelled()
 				}
 			}
 		}
-	}
+	}*/
 }
 
 bool UCellBase::DragDetected()

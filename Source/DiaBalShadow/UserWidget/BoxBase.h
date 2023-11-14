@@ -57,7 +57,13 @@ public:
 	void OnItemUpdated(const UDiaBalShadowPrimaryDataAsset* Item, const FString& OldGUID);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void OnItemDroped(const UCellBase* Cell, const UCellBase* OprationCell);
+	void OnItemDropedTarget(const UCellBase* Cell, const UCellBase* OprationCell);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemDropedSource(const UCellBase* OprationCell);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnItemThrowed(const UCellBase* Cell);
 
 public:
 	UFUNCTION(BlueprintCallable, Category = Item)

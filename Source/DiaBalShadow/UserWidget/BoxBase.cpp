@@ -149,7 +149,7 @@ void UBoxBase::ItemDropedTarget(UCellBase* Cell, UCellBase* OperationCell)
 			
 			OperationCell->DropSourceEvent.ExecuteIfBound(OperationCell);
 
-			OnItemDroped(Cell, OperationCell);
+			OnItemDropedTarget(Cell, OperationCell);
 		}		
 		OperationCell->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 	}
@@ -160,6 +160,7 @@ void UBoxBase::ItemDropedSource(UCellBase* OperationCell)
 	int32 X = 0, Y = 0;
 	if (GetCellPostion(OperationCell, X, Y))
 		ShowCell(X, Y, OperationCell->Item);
+	OnItemDropedSource(OperationCell);
 	OperationCell->Clear();
 }
 
@@ -171,8 +172,9 @@ void UBoxBase::ItemThrowed(UCellBase* Cell)
 	int32 X = 0, Y = 0;
 	if(GetCellPostion(Cell, X, Y))
 		ShowCell(X, Y, Cell->Item);
+	OnItemThrowed(Cell);
 	Cell->Clear();
-
+	
 }
 
 void UBoxBase::AddItem(UDiaBalShadowPrimaryDataAsset* Item, FString GUID)

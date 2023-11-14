@@ -22,6 +22,12 @@ public:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
+	FString SubordinationName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
+	FString Category;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
 	float MaxDamage;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon)
