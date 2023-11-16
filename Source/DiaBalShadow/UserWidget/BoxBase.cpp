@@ -20,9 +20,9 @@ void UBoxBase::AddCell(int32 X, int32 Y, UCellBase* Cell)
 
 bool UBoxBase::GetCellPostion(UCellBase* Cell, int32& OutX, int32& OutY)
 {
-	for (int X = 0; X < MaxBoxRow; X++)
+	for (int32 X = 0; X < MaxBoxRow; X++)
 	{
-		for (int Y = 0; Y < MaxBoxColumn; Y++)
+		for (int32 Y = 0; Y < MaxBoxColumn; Y++)
 		{
 			if(BoxCellWidget[X][Y] == Cell)
 			{
@@ -60,9 +60,9 @@ bool UBoxBase::IsAvailableCell(int32 X, int32 Y, UDiaBalShadowPrimaryDataAsset* 
 
 UCellBase* UBoxBase::FindAvailableCell(UDiaBalShadowPrimaryDataAsset* Item, int32& OutX, int32& OutY)
 {
-	for (int X = 0; X < MaxBoxRow; X++)
+	for (int32 X = 0; X < MaxBoxRow; X++)
 	{
-		for (int Y = 0; Y < MaxBoxColumn; Y++)
+		for (int32 Y = 0; Y < MaxBoxColumn; Y++)
 		{
 			if (IsAvailableCell(X, Y, Item))
 			{
@@ -230,12 +230,12 @@ void UBoxBase::ShowCell(int32 X, int32 Y, UDiaBalShadowPrimaryDataAsset* Item)
 	{
 		int32 MaxX = X + Item->RowSpan;
 		int32 MaxY = Y + Item->ColumnSpan;
-		for (; X < MaxX; X++)
+		for (int32 M = X; M < MaxX; M++)
 		{
-			for (; Y < MaxY; Y++)
+			for (int32 N = Y; N < MaxY; N++)
 			{
-				BoxCellWidget[X][Y]->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
-				BoxCellWidget[X][Y]->SetAvailable(true);
+				BoxCellWidget[M][N]->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+				BoxCellWidget[M][N]->SetAvailable(true);
 			}
 		}
 	}
@@ -247,13 +247,13 @@ void UBoxBase::HideCell(int32 X, int32 Y, UDiaBalShadowPrimaryDataAsset* Item)
 	{
 		int32 MaxX = X + Item->RowSpan;
 		int32 MaxY = Y + Item->ColumnSpan;
-		for (; X < MaxX; X++)
+		for (int32 M = X; M < MaxX; M++)
 		{
-			for (; Y < MaxY; Y++)
+			for (int32 N = Y; N < MaxY; N++)
 			{
-				if (BoxCellWidget[X][Y]->Item == nullptr)
-					BoxCellWidget[X][Y]->SetVisibility(ESlateVisibility::Hidden);
-				BoxCellWidget[X][Y]->SetAvailable(false);
+				if (BoxCellWidget[M][N]->Item == nullptr)
+					BoxCellWidget[M][N]->SetVisibility(ESlateVisibility::Hidden);
+				BoxCellWidget[M][N]->SetAvailable(false);
 			}
 		}
 	}
