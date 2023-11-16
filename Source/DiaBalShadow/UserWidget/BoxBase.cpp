@@ -173,8 +173,21 @@ void UBoxBase::ItemThrowed(UCellBase* Cell)
 	if(GetCellPostion(Cell, X, Y))
 		ShowCell(X, Y, Cell->Item);
 	OnItemThrowed(Cell);
+	APlayerController* FirstController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (FirstController) {
+		ADiaBalShadowPlayerController* PlayerController = Cast<ADiaBalShadowPlayerController>(FirstController);
+		if (PlayerController) {
+			if (!Cell->GUID.IsEmpty())
+			{
+				PlayerController->itemManager->RemoveUniqueItem(Cell->GUID);
+			}
+			else
+			{
+				PlayerController->itemManager->AddComplexItem(Cell->Item, -Cell->ItemCount);
+			}
+		}
+	}
 	Cell->Clear();
-	
 }
 
 void UBoxBase::AddItem(UDiaBalShadowPrimaryDataAsset* Item, FString GUID)

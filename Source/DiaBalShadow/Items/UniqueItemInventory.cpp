@@ -26,7 +26,10 @@ bool UUniqueItemInventory::AddUniqueItem(FUniqueData Item, bool bAutoSlot)
 FUniqueData UUniqueItemInventory::GetUniqueItem(FString GUID)
 {
 	FUniqueData* OldItem = UniqueItemData.Find(GUID);
-	return *OldItem;
+	if (OldItem)
+		return *OldItem;
+	else
+		return FUniqueData();
 }
 
 void UUniqueItemInventory::GetUniqueItems(TArray<FUniqueData>& Items)
