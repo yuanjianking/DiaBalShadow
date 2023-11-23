@@ -104,7 +104,7 @@ void ADiaBalShadowPlayerController::OnSetDestinationTriggered()
 		CachedDestination = Hit.Location;
 	}
 
-	if(Hit.GetActor()->IsA<ADiaBalShadowEnemyCharacter>())
+	if(Hit.GetActor() && Hit.GetActor()->IsA<ADiaBalShadowEnemyCharacter>())
 	{ 
 		ADiaBalShadowEnemyCharacter* EnemyCharacter = Cast<ADiaBalShadowEnemyCharacter>(Hit.GetActor());
 		ADiaBalShadowPlayerCharacter* ControlledCharacter = Cast<ADiaBalShadowPlayerCharacter>(GetCharacter());
